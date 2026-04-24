@@ -37,4 +37,9 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(move * speed * Time.deltaTime);
         
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
 }
