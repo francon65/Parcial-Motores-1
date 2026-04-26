@@ -22,7 +22,7 @@ public class PahntomProjectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            //TODO: Dañar
+            PlayerCore.instance.ReciveDamage(1);
         }
     }
 

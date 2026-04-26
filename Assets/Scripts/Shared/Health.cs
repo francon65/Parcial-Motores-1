@@ -17,4 +17,9 @@ public class Health
     {
         return currentHealth;
     }
+
+    public void Reseathealth()
+    {
+        currentHealth = maxHealth;
+    }
 }

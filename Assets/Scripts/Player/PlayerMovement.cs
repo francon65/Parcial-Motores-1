@@ -48,4 +48,9 @@ public class PlayerMovement : MonoBehaviour
     {
         
     }
+
+    public void DisableContrler(bool state)
+    {
+        controller.enabled = state;
+    }
 }
