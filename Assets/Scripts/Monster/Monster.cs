@@ -5,11 +5,13 @@ public class Monster : MonoBehaviour
 {
     protected int damage;
     [SerializeField] float movementSpeed;
-    bool activated;
+    protected bool activated;
+    [SerializeField] protected Vector3 movementDirection;
+    protected Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -18,9 +20,12 @@ public class Monster : MonoBehaviour
         
     }
 
-    protected virtual void Move()
+    
+
+    protected virtual void Move(Vector3 movementVector)
     {
-        transform.position += transform.forward * (movementSpeed * Time.deltaTime);
+        Vector3 t = transform.InverseTransformDirection(movementVector);
+        transform.position += t * (movementSpeed * Time.deltaTime);
     }
 
     

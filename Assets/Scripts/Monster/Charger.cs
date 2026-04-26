@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Charger : Monster
 {
-    bool activated;
+    [SerializeField] float timeAlive;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,7 +13,15 @@ public class Charger : Monster
     // Update is called once per frame
     void Update()
     {
-        Move();
+        Move(movementDirection);
+        if (activated)
+        {
+            timeAlive -= Time.deltaTime;
+            if(timeAlive <= 0)
+            {
+                ToggleActivation(false);
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
