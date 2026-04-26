@@ -1,19 +1,23 @@
 using TMPro;
 using UnityEngine;
 
-public class Uimanager : MonoBehaviour
+public class NoteManager : MonoBehaviour
 {
-    public static Uimanager Instance;
+    public static NoteManager Instance;
     [SerializeField] private TextMeshProUGUI noteCounterText;
     int noteCounter = 0;    
+    int totalNotes = 0;
+
+    [SerializeField] GameObject NotesContainer;
     void Start()
     {
+        totalNotes = NotesContainer.transform.childCount;
         if (Instance == null)
         {
             Instance = this;
         }
         else { Destroy(gameObject); }
-        noteCounterText.text = $"Notas {noteCounter}/X";
+        UpdateText();
         Notes.OnNotePickUp += UpdateNoteCount;
     }
 
@@ -26,6 +30,11 @@ public class Uimanager : MonoBehaviour
     private void UpdateNoteCount()
     {
         noteCounter++;
-        noteCounterText.text = $"Notas {noteCounter}/X";
+        UpdateText();
+    }
+
+    private void UpdateText()
+    {
+        noteCounterText.text = $"Notas {noteCounter}/{totalNotes}";
     }
 }

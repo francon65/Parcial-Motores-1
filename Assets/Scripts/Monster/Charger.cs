@@ -29,6 +29,7 @@ public class Charger : Monster
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("I GOT U");
+            PlayerCore.instance.ResetPosition();
             ToggleActivation(false);
         }
     }
