@@ -33,7 +33,13 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
+        
+
         Vector3 move = transform.right * x + transform.forward * z;
+        if (!controller.isGrounded)
+        {
+            move.y = -3;
+        }
         controller.Move(move * speed * Time.deltaTime);
         
     }
