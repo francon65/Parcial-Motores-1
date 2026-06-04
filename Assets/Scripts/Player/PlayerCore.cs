@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
 public class PlayerCore : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI vida;
@@ -14,6 +15,8 @@ public class PlayerCore : MonoBehaviour
     Vector3 initialPosition;
 
     PlayerMovement movement;
+
+    
     private void Start()
     {
         KeyesCollected = new List<string>();
