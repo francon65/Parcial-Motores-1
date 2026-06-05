@@ -1,7 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerCore : MonoBehaviour
 {
@@ -18,8 +21,14 @@ public class PlayerCore : MonoBehaviour
     PlayerMovement movement;
 
     [SerializeField] GameObject pause;
-
+    [SerializeField] private Image staminaBar;
+    [SerializeField] private TextMeshProUGUI MensajeTXT;
     public static event Action OnPlayerDied;
+
+     void Awake()
+    {
+      instance = this;  
+    }
     private void Start()
     {
         KeyesCollected = new List<string>();
@@ -73,7 +82,7 @@ public class PlayerCore : MonoBehaviour
 
     void UpdateText()
     {
-        vida.text = playerHealth.GetCurrenthealth().ToString();
+        vida.text = $"vida: {playerHealth.GetCurrenthealth().ToString()}";
     }
 
     void TogglePause()
@@ -100,5 +109,22 @@ public class PlayerCore : MonoBehaviour
             Cursor.visible = false;
         }
         else Cursor.visible = true;
+    }
+
+    public void SetStamina(float value)
+    {
+        staminaBar.fillAmount = value;
+    }
+
+    public void ShowText()
+    {
+        StartCoroutine(Show());
+    }
+
+    private IEnumerator Show()
+    {
+        MensajeTXT.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        MensajeTXT.gameObject.SetActive(false);
     }
 }

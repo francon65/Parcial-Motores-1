@@ -8,8 +8,8 @@ public class GhostBoss : MonoBehaviour
     [SerializeField]
     Transform player;
     [SerializeField] GameObject projectilePrefab;
-    [SerializeField] Transform firePoint;         
-
+    [SerializeField] Transform firePoint;
+    [SerializeField] Animator anim;
     
 
     [SerializeField] float moveSpeed = 3.0f;
@@ -90,7 +90,7 @@ public class GhostBoss : MonoBehaviour
     {
         if (projectilePrefab == null || firePoint == null) return;
 
-        
+        anim.SetTrigger("Ataque");
         GameObject proj = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Rigidbody rb = proj.GetComponent<Rigidbody>();
 

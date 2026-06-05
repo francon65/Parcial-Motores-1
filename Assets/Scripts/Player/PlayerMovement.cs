@@ -97,6 +97,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+        PlayerCore.instance.SetStamina(currentStamina / maxStamina);
 
         PlayRandomFootstep(isMoving);
 

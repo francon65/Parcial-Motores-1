@@ -1,8 +1,8 @@
+using Cinemachine;
 using System.Collections;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-
 public class SequenceManager : MonoBehaviour
 {
     [SerializeField] GameObject boss;
@@ -10,7 +10,9 @@ public class SequenceManager : MonoBehaviour
     [SerializeField] ParticleSystem part;
     [SerializeField] Animator animator;
 
-    public static SequenceManager instance; 
+    public static SequenceManager instance;
+
+    
     void Start()
     {
         if(instance == null)

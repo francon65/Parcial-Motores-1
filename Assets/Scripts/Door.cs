@@ -8,12 +8,13 @@ public class Door : MonoBehaviour, Iinteractable
     public void Interact()
     {
 
-        if (PlayerCore.instance.GetKey(keyneeded)) 
+        if (PlayerCore.instance.GetKey(keyneeded))
         {
             animator.SetBool("Open", true);
             gameObject.GetComponent<Collider>().enabled = false;
             source.Play();
         }
+        else { PlayerCore.instance.ShowText(); }
         
     }
 
