@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -17,6 +18,8 @@ public class PlayerCore : MonoBehaviour
     PlayerMovement movement;
 
     [SerializeField] GameObject pause;
+
+    public static event Action OnPlayerDied;
     private void Start()
     {
         KeyesCollected = new List<string>();
@@ -36,7 +39,7 @@ public class PlayerCore : MonoBehaviour
         
         if (playerHealth.GetCurrenthealth() <= 0)
         {
-            ResetPosition();
+            OnPlayerDied?.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -65,6 +68,7 @@ public class PlayerCore : MonoBehaviour
     public void ReciveDamage(int damage)
     {
         playerHealth.TakeDamage(damage);
+        UpdateText();
     }
 
     void UpdateText()

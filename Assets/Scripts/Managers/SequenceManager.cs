@@ -32,6 +32,7 @@ public class SequenceManager : MonoBehaviour
         
         GhostBoss.OnPlayerCaught += TriggerRestart;
         GhostBoss.OnBossDefeated += TriggerVictory;
+        PlayerCore.OnPlayerDied += TriggerRestart;
     }
 
  
@@ -40,6 +41,7 @@ public class SequenceManager : MonoBehaviour
         
         GhostBoss.OnPlayerCaught -= TriggerRestart;
         GhostBoss.OnBossDefeated -= TriggerVictory;
+        PlayerCore.OnPlayerDied -= TriggerRestart;
     }
 
     public IEnumerator StartSequence()
