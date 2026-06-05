@@ -48,6 +48,8 @@ AudioMixerController:
     name: ambienVolume
   - guid: f9995edda3d36404cb6e71b14242b1b9
     name: masterVolume
+  - guid: be17d72e7faf93b43aa6df4466cc78e4
+    name: sfxVolume
   m_AudioMixerGroupViews:
   - guids:
     - 719a8a91113f6cd47a042ea7be8cd646

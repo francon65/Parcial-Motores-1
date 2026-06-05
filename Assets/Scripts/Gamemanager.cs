@@ -3,6 +3,7 @@ using UnityEngine;
 public class Gamemanager : MonoBehaviour
 {
     public static Gamemanager instance;
+    public float currenSens { get; private set; } = 200;
     void Awake()
     {
         if (instance == null)
@@ -20,6 +21,9 @@ public class Gamemanager : MonoBehaviour
     {
         
     }
-
+    public void SetSens(float val)
+    {
+        currenSens = val;
+    }
     
 }

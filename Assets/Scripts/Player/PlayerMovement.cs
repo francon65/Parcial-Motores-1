@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
         {
             audioSource.outputAudioMixerGroup = sfxGroup;
         }
+
+        mouseSensitivity = Gamemanager.instance.currenSens;
     }
 
     // Update is called once per frame
@@ -138,5 +140,11 @@ public class PlayerMovement : MonoBehaviour
         if (footstepSounds.Length == 0) return;
 
         
+    }
+
+    public void ChangeSensitivity(float sliderValue)
+    {
+        mouseSensitivity = sliderValue;
+        Gamemanager.instance.SetSens(mouseSensitivity);
     }
 }
