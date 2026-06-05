@@ -16,7 +16,7 @@ public class PlayerCore : MonoBehaviour
 
     PlayerMovement movement;
 
-    
+    [SerializeField] GameObject pause;
     private void Start()
     {
         KeyesCollected = new List<string>();
@@ -27,18 +27,21 @@ public class PlayerCore : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
         playerHealth = new Health(maxhealth);
         initialPosition = transform.position;
+        ToggleCursor();
         UpdateText();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            playerHealth.TakeDamage(1);
-        }
+        
         if (playerHealth.GetCurrenthealth() <= 0)
         {
             ResetPosition();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
         }
     }
 
@@ -67,5 +70,31 @@ public class PlayerCore : MonoBehaviour
     void UpdateText()
     {
         vida.text = playerHealth.GetCurrenthealth().ToString();
+    }
+
+    void TogglePause()
+    {
+        pause.SetActive(!pause.activeSelf);
+        if (Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
+        else Time.timeScale = 0;
+        ToggleCursor();
+    }
+
+    void ToggleCursor()
+    {
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else Cursor.lockState = CursorLockMode.Locked;
+
+        if (Cursor.visible)
+        {
+            Cursor.visible = false;
+        }
+        else Cursor.visible = true;
     }
 }

@@ -4,6 +4,7 @@ public class Door : MonoBehaviour, Iinteractable
 {
     [SerializeField] string keyneeded;
     Animator animator;
+    AudioSource source;
     public void Interact()
     {
 
@@ -11,6 +12,7 @@ public class Door : MonoBehaviour, Iinteractable
         {
             animator.SetBool("Open", true);
             gameObject.GetComponent<Collider>().enabled = false;
+            source.Play();
         }
         
     }
@@ -19,6 +21,7 @@ public class Door : MonoBehaviour, Iinteractable
     void Start()
     {
         animator = GetComponent<Animator>();    
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
