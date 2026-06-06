@@ -39,7 +39,8 @@ public class PlayerCore : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
         playerHealth = new Health(maxhealth);
         initialPosition = transform.position;
-        ToggleCursor();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
         UpdateText();
     }
 
