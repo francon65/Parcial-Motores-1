@@ -1,8 +1,10 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Gamemanager : MonoBehaviour
 {
     public static Gamemanager instance;
+
+    public float currenSens { get; private set; } = 200;
     void Awake()
     {
         if (instance == null)
@@ -13,28 +15,33 @@ public class Gamemanager : MonoBehaviour
     }
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        PlayerCore.OnPlayerDied += PlayerCore.instance.ResetPosition;
     }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ToggleCursor();
-        }
+        
+    }
+    public void SetSens(float val)
+    {
+        currenSens = val;
     }
 
-    void ToggleCursor()
+    private void OnDisable()
     {
-        Cursor.visible = !Cursor.visible;
-        if(Cursor.visible )
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+        
+        SceneManager.activeSceneChanged -= ChangeScene;
+    }
+
+   
+    private void ChangeScene(Scene escenaAnterior, Scene escenaNueva)
+    {
+        PlayerCore.OnPlayerDied -= PlayerCore.instance.ResetPosition;
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        SceneManager.LoadScene(2);
     }
 }
