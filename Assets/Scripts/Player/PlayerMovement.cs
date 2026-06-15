@@ -45,8 +45,8 @@ public class PlayerMovement : MonoBehaviour
         {
             audioSource.outputAudioMixerGroup = sfxGroup;
         }
-
-        mouseSensitivity = Gamemanager.instance.currenSens;
+        mouseSensitivity =Gamemanager.instance.currenSens;
+            
     }
 
     // Update is called once per frame
