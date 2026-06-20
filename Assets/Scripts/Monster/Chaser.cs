@@ -3,12 +3,12 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public enum State {Idle,Chasing,Patrolling,Screeching }
-public class Chaser : MonoBehaviour
+public  class Chaser : MonoBehaviour
 {
 
-    [SerializeField] private Transform playerTransform;
+    [SerializeField] protected Transform playerTransform;
     [SerializeField]State state;
-    private NavMeshAgent agent;
+    protected NavMeshAgent agent;
     Animator animator;
 
     [SerializeField] int visionConeAngle = 45;
@@ -23,10 +23,13 @@ public class Chaser : MonoBehaviour
     [SerializeField] float patrolRadius = 15f;
     [SerializeField] float waitTime = 2f;
     private float patrolTimer;
+    [SerializeField]bool canStopChasing;
+    [SerializeField] bool Intercept;
+    [SerializeField] private float leadDistance;
 
     [SerializeField]private bool canLookForPlayer;
 
-    void Start()
+    protected  void Start()
     {
         
         agent = GetComponent<NavMeshAgent>();
@@ -39,7 +42,7 @@ public class Chaser : MonoBehaviour
         }
     }
 
-    void Update()
+    protected  void Update()
     {
         switch (state)
         {
@@ -72,11 +75,25 @@ public class Chaser : MonoBehaviour
         }
     }
 
-    void Chasing()
+    protected  void Chasing()
     {
         animator.SetTrigger(runTrig);
-        agent.SetDestination(playerTransform.position);
-        if (Vector3.Distance(transform.position, playerTransform.position) >maxChasreRange)
+        Vector3 _targetPoint;
+        if (Intercept)
+        {
+            
+            if (agent.remainingDistance < leadDistance)
+            {
+                _targetPoint = playerTransform.position;
+                agent.speed = 5;
+            }
+            else { _targetPoint = playerTransform.position + (playerTransform.forward * leadDistance); agent.speed = 7; }
+            
+        }
+        else { _targetPoint = playerTransform.position; }
+        agent.SetDestination(_targetPoint);
+
+        if (Vector3.Distance(transform.position, playerTransform.position) >maxChasreRange && canStopChasing)
         {
             animator.ResetTrigger(runTrig);
             state = State.Idle;
@@ -94,7 +111,7 @@ public class Chaser : MonoBehaviour
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             patrolTimer += Time.deltaTime;
-
+            animator.SetTrigger(idleTrig);
             if (patrolTimer >= waitTime)
             {
                 MoveToPoint();
@@ -129,7 +146,8 @@ public class Chaser : MonoBehaviour
 
     public void MoveToPoint()
     {
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * patrolRadius;
+        animator.SetTrigger(walkTrig);
+        Vector3 randomDirection = transform.position + (UnityEngine.Random.insideUnitSphere * patrolRadius);
 
         NavMeshHit hit;
         if (NavMesh.SamplePosition(randomDirection, out hit, patrolRadius, NavMesh.AllAreas))
@@ -145,5 +163,10 @@ public class Chaser : MonoBehaviour
         animator.ResetTrigger(screamTrig);
         agent.isStopped = false;
         state=State.Chasing;
+    }
+
+    public void SetState(State state)
+    {
+        this.state = state;
     }
 }

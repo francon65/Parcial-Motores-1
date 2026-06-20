@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         {
             audioSource.outputAudioMixerGroup = sfxGroup;
         }
-        mouseSensitivity =Gamemanager.instance.currenSens;
+        mouseSensitivity =200;
             
     }
 
