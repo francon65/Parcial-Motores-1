@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     //AUDIO
     [SerializeField] AudioClip[] footstepSounds;
     [SerializeField] AudioMixerGroup sfxGroup;    
-    public float timeBetweenSteps = 0.7f;
+    public float timeBetweenSteps = 2f;
     private AudioSource audioSource;
     private float stepTimer;
 

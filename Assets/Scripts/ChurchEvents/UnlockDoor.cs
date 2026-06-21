@@ -15,7 +15,7 @@ public class UnlockDoor : MonoBehaviour, Iinteractable
     [SerializeField] Material green;
     [SerializeField] ChurchDoor churchDoor;
     [SerializeField] GameObject chaser;
-    
+    [SerializeField] Animator animator;
     void Start()
     {
         
@@ -33,6 +33,7 @@ public class UnlockDoor : MonoBehaviour, Iinteractable
         if(triggered) return;  
         StartCoroutine(ShowDoorCutscene());
         triggered = true;
+        animator.SetTrigger("Pull");
     }
 
     private IEnumerator ShowDoorCutscene()

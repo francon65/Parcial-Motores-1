@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 
 public enum State {Idle,Chasing,Patrolling,Screeching }
 public  class Chaser : MonoBehaviour
@@ -29,12 +30,21 @@ public  class Chaser : MonoBehaviour
 
     [SerializeField]private bool canLookForPlayer;
 
+    //AUDIO
+    AudioSource audioSource;
+    [SerializeField]AudioClip scream;
+    //AUDIO
+    [SerializeField] AudioClip[] footstepSounds;
+    [SerializeField] AudioMixerGroup sfxGroup;
+    public float timeBetweenSteps = 2f;
+    
+    private float stepTimer;
     protected  void Start()
     {
         
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-
+        audioSource = GetComponent<AudioSource>();
         if (playerTransform == null)
         {
             GameObject player = GameObject.FindWithTag("Player");
@@ -79,6 +89,7 @@ public  class Chaser : MonoBehaviour
     {
         animator.SetTrigger(runTrig);
         Vector3 _targetPoint;
+        PlayRandomFootstep();
         if (Intercept)
         {
             
@@ -165,8 +176,37 @@ public  class Chaser : MonoBehaviour
         state=State.Chasing;
     }
 
+    void ScreechStart()
+    {
+        audioSource.PlayOneShot(scream);
+    }
+
     public void SetState(State state)
     {
         this.state = state;
+    }
+
+    void PlayRandomFootstep()
+    {
+        
+        
+            stepTimer -= Time.deltaTime;
+            if (stepTimer <= 0f)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, footstepSounds.Length);
+                AudioClip clip = footstepSounds[randomIndex];
+
+                audioSource.pitch = UnityEngine.Random.Range(0.5f, .8f);
+                audioSource.PlayOneShot(clip);
+                stepTimer = timeBetweenSteps;
+            }
+        
+        else
+        {
+            stepTimer = 0.1f;
+        }
+        if (footstepSounds.Length == 0) return;
+
+
     }
 }

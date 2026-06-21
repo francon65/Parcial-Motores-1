@@ -9,6 +9,8 @@ public class ChurchDoor : MonoBehaviour, Iinteractable
     private Quaternion targetRotation;
     private Quaternion openRotation;
     [SerializeField] Chaser chaser;
+    bool slam = false;
+    [SerializeField] GameObject firstTrigger;
     void Start()
     {
         targetRotation = Quaternion.Euler(transform.localEulerAngles.x, 0f, transform.localEulerAngles.z);
@@ -22,12 +24,17 @@ public class ChurchDoor : MonoBehaviour, Iinteractable
         {
 
             transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, Time.deltaTime * rotationSpeed);
-
+            
 
             if (Quaternion.Angle(transform.localRotation, targetRotation) < 0.1f)
             {
+                if (!slam)
+                {
+                    GetComponent<AudioSource>().Play();
+                    slam = true;
+                }
                 transform.localRotation = targetRotation;
-                locked = false;
+                
                 
             }
         }
@@ -40,6 +47,7 @@ public class ChurchDoor : MonoBehaviour, Iinteractable
                 transform.localRotation = openRotation;
                 keepOpen = false; 
             }
+            
         }
     }
 
@@ -53,6 +61,7 @@ public class ChurchDoor : MonoBehaviour, Iinteractable
         if (!locked)
         {
             keepOpen = true;
+            firstTrigger.SetActive(true);
         }
     }
 }
