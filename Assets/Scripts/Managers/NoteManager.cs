@@ -37,4 +37,9 @@ public class NoteManager : MonoBehaviour
     {
         noteCounterText.text = $"Notas {noteCounter}/{totalNotes}";
     }
+
+    public int NotesGathered()
+    {
+        return noteCounter;
+    }
 }

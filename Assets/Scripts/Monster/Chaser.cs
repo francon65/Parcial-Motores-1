@@ -134,6 +134,8 @@ public  class Chaser : MonoBehaviour
     void Screeching()
     {
         agent.isStopped = true;
+        animator.ResetTrigger(idleTrig);
+        animator.ResetTrigger(walkTrig);
         animator.SetTrigger(screamTrig);
     }
 
@@ -157,6 +159,7 @@ public  class Chaser : MonoBehaviour
 
     public void MoveToPoint()
     {
+        animator.ResetTrigger(idleTrig);
         animator.SetTrigger(walkTrig);
         Vector3 randomDirection = transform.position + (UnityEngine.Random.insideUnitSphere * patrolRadius);
 
@@ -208,5 +211,13 @@ public  class Chaser : MonoBehaviour
         if (footstepSounds.Length == 0) return;
 
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerCore.instance.Cought();
+        }
     }
 }
