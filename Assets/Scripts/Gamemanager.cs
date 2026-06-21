@@ -12,8 +12,9 @@ public class Gamemanager : MonoBehaviour
             instance = this;
         }
         else Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
-    private void Start()
+    private void OnEnable()
     {
         PlayerCore.OnPlayerDied += Restart;
     }

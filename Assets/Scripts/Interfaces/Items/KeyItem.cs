@@ -7,7 +7,7 @@ public class KeyItem : Item
 
     public override void Interact()
     {
-        Debug.Log(PlayerCore.instance);
+        
         PlayerCore.instance.addkey(keyName);
         Destroy(gameObject);
     }

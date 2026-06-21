@@ -41,9 +41,12 @@ public class UnlockDoor : MonoBehaviour, Iinteractable
         
         GetComponent<Collider>().enabled = false;
         doorCamera.Priority = 20;
+        doorCamera.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
         LightColor.material = green;    
         yield return new WaitForSeconds(cameraShowDuration);
+        doorCamera.Priority = 5;
+        doorCamera.gameObject.SetActive(false);
         churchDoor.IsLocked(false);
         doorCamera.Priority = 5;
         chaser.SetActive(true);

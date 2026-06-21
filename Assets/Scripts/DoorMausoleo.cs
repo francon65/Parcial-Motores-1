@@ -15,10 +15,12 @@ public class DoorMausoleo : MonoBehaviour, Iinteractable
                 animator.SetBool("Open", true);
                 gameObject.GetComponent<Collider>().enabled = false;
                 source.Play();
+
             }
+            else { PlayerCore.instance.ShowText("todas las notas"); }
             
         }
-        else { PlayerCore.instance.ShowText(); }
+        else { PlayerCore.instance.ShowText("la llave"); }
         
     }
 

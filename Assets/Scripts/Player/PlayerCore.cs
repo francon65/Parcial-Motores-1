@@ -38,7 +38,7 @@ public class PlayerCore : MonoBehaviour
         initialPosition = transform.position;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = true;
-        UpdateText();
+        
     }
 
     private void Update()
@@ -67,16 +67,7 @@ public class PlayerCore : MonoBehaviour
         movement.DisableContrler(true);
     }
 
-    public void ReciveDamage(int damage)
-    {
-        
-        UpdateText();
-    }
-
-    void UpdateText()
-    {
-        
-    }
+    
 
     void TogglePause()
     {
@@ -109,13 +100,14 @@ public class PlayerCore : MonoBehaviour
         staminaBar.fillAmount = value;
     }
 
-    public void ShowText()
+    public void ShowText(string _faltante)
     {
-        StartCoroutine(Show());
+        StartCoroutine(Show(_faltante));
     }
 
-    private IEnumerator Show()
+    private IEnumerator Show(string faltente)
     {
+        MensajeTXT.text = $"No tienes {faltente}";
         MensajeTXT.gameObject.SetActive(true);
         yield return new WaitForSeconds(2);
         MensajeTXT.gameObject.SetActive(false);

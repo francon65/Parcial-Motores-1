@@ -21,14 +21,10 @@ public class TriggerArea : MonoBehaviour
         if (triggered) { return; }
         if (other.CompareTag("Player"))
         {
-
+            door.SetActive(false);
+            chaser.TriggerWakeUp();
         }
     }
 
-    IEnumerator Activate()
-    {
-        door.SetActive(false);
-        chaser.TriggerWakeUp();
-        yield return null;
-    }
+    
 }
