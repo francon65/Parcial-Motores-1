@@ -14,7 +14,7 @@ public class Door : MonoBehaviour, Iinteractable
             gameObject.GetComponent<Collider>().enabled = false;
             source.Play();
         }
-        else { PlayerCore.instance.ShowText(); }
+        else { PlayerCore.instance.ShowText("la llave"); }
         
     }
 

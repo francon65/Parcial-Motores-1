@@ -5,9 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SequenceManager : MonoBehaviour
 {
-    [SerializeField] GameObject boss;
-    [SerializeField] Vector3 position = new Vector3(12, 6, -6);
-    [SerializeField] ParticleSystem part;
+    
     [SerializeField] Animator animator;
 
     public static SequenceManager instance;
@@ -20,7 +18,7 @@ public class SequenceManager : MonoBehaviour
             instance = this;
         }
         else { Destroy(gameObject); }
-            StartCoroutine(StartSequence());
+            
     }
 
     // Update is called once per frame
@@ -29,30 +27,9 @@ public class SequenceManager : MonoBehaviour
         
     }
 
-    private void OnEnable()
-    {
-        
-        GhostBoss.OnPlayerCaught += TriggerRestart;
-        GhostBoss.OnBossDefeated += TriggerVictory;
-        PlayerCore.OnPlayerDied += TriggerRestart;
-    }
+    
 
- 
-    private void OnDisable()
-    {
-        
-        GhostBoss.OnPlayerCaught -= TriggerRestart;
-        GhostBoss.OnBossDefeated -= TriggerVictory;
-        PlayerCore.OnPlayerDied -= TriggerRestart;
-    }
-
-    public IEnumerator StartSequence()
-    {
-        part.Play();
-        yield return new WaitForSeconds(5);
-        Instantiate(boss,position,Quaternion.identity);
-        part.Stop();
-    }
+    
 
     void TriggerRestart()
     {

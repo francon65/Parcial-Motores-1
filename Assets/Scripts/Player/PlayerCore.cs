@@ -8,11 +8,8 @@ using UnityEngine.UI;
 
 public class PlayerCore : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI vida;
+    
 
-
-    private Health playerHealth;
-    [SerializeField] int maxhealth;
     List<string> KeyesCollected;
 
     public static PlayerCore instance;
@@ -37,19 +34,15 @@ public class PlayerCore : MonoBehaviour
             instance = this;
         }
         movement = GetComponent<PlayerMovement>();
-        playerHealth = new Health(maxhealth);
+        
         initialPosition = transform.position;
-        ToggleCursor();
-        UpdateText();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
+        
     }
 
     private void Update()
     {
-        
-        if (playerHealth.GetCurrenthealth() <= 0)
-        {
-            OnPlayerDied?.Invoke();
-        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -70,20 +63,11 @@ public class PlayerCore : MonoBehaviour
     {
         movement.DisableContrler(false);
         transform.position = initialPosition;
-        playerHealth.Reseathealth();
+        
         movement.DisableContrler(true);
     }
 
-    public void ReciveDamage(int damage)
-    {
-        playerHealth.TakeDamage(damage);
-        UpdateText();
-    }
-
-    void UpdateText()
-    {
-        vida.text = $"vida: {playerHealth.GetCurrenthealth().ToString()}";
-    }
+    
 
     void TogglePause()
     {
@@ -116,15 +100,21 @@ public class PlayerCore : MonoBehaviour
         staminaBar.fillAmount = value;
     }
 
-    public void ShowText()
+    public void ShowText(string _faltante)
     {
-        StartCoroutine(Show());
+        StartCoroutine(Show(_faltante));
     }
 
-    private IEnumerator Show()
+    private IEnumerator Show(string faltente)
     {
+        MensajeTXT.text = $"No tienes {faltente}";
         MensajeTXT.gameObject.SetActive(true);
         yield return new WaitForSeconds(2);
         MensajeTXT.gameObject.SetActive(false);
+    }
+
+    public void Cought()
+    {
+        OnPlayerDied?.Invoke();
     }
 }

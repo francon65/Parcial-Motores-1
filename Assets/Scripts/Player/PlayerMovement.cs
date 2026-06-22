@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     //AUDIO
     [SerializeField] AudioClip[] footstepSounds;
     [SerializeField] AudioMixerGroup sfxGroup;    
-    public float timeBetweenSteps = 0.7f;
+    public float timeBetweenSteps = 2f;
     private AudioSource audioSource;
     private float stepTimer;
 
@@ -45,8 +45,13 @@ public class PlayerMovement : MonoBehaviour
         {
             audioSource.outputAudioMixerGroup = sfxGroup;
         }
-
-        mouseSensitivity = Gamemanager.instance.currenSens;
+        if (Gamemanager.instance != null)
+        {
+            mouseSensitivity = Gamemanager.instance.currenSens;
+        }
+        else mouseSensitivity = 200;
+        
+            
     }
 
     // Update is called once per frame

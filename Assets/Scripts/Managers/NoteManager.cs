@@ -19,6 +19,7 @@ public class NoteManager : MonoBehaviour
         else { Destroy(gameObject); }
         UpdateText();
         Notes.OnNotePickUp += UpdateNoteCount;
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
@@ -29,12 +30,19 @@ public class NoteManager : MonoBehaviour
 
     private void UpdateNoteCount()
     {
+        
         noteCounter++;
+        Debug.Log(noteCounter);
         UpdateText();
     }
 
     private void UpdateText()
     {
         noteCounterText.text = $"Notas {noteCounter}/{totalNotes}";
+    }
+
+    public int NotesGathered()
+    {
+        return noteCounter;
     }
 }

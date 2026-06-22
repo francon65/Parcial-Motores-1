@@ -12,10 +12,11 @@ public class Gamemanager : MonoBehaviour
             instance = this;
         }
         else Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
-    private void Start()
+    private void OnEnable()
     {
-        PlayerCore.OnPlayerDied += PlayerCore.instance.ResetPosition;
+        PlayerCore.OnPlayerDied += Restart;
     }
     // Update is called once per frame
     void Update()
@@ -29,7 +30,7 @@ public class Gamemanager : MonoBehaviour
 
     private void OnDisable()
     {
-        
+        PlayerCore.OnPlayerDied -= Restart;
         SceneManager.activeSceneChanged -= ChangeScene;
     }
 
@@ -40,8 +41,17 @@ public class Gamemanager : MonoBehaviour
 
     }
 
+
+    void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
     private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene(2);
+        if (other.CompareTag("Player"))
+        {
+            SceneManager.LoadScene(2);
+        }
+        
     }
 }
