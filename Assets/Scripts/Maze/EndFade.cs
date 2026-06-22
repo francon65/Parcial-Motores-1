@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class EndFade : MonoBehaviour
@@ -16,6 +17,13 @@ public class EndFade : MonoBehaviour
     void EndScreen()
     {
         fade.SetActive(true);
-        SceneManager.LoadScene(0);
+        StartCoroutine(SendToMainMenu());
+
     }
+
+    IEnumerator SendToMainMenu()
+    {
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene(0);
+    } 
 }
